@@ -1,0 +1,85 @@
+<form [formGroup]="configurationForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Engine Type</mat-label>
+    <mat-select formControlName="engineType">
+      <mat-option value="Internal Combustion">Internal Combustion</mat-option>
+      <mat-option value="Electric">Electric</mat-option>
+      <mat-option value="Battery">Battery</mat-option>
+    </mat-select>
+    <mat-error *ngIf="configurationForm.get('engineType')?.invalid">This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Brand</mat-label>
+    <input matInput formControlName="brand">
+    <mat-error *ngIf="configurationForm.get('brand')?.invalid">This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Model</mat-label>
+    <input matInput formControlName="model">
+    <mat-error *ngIf="configurationForm.get('model')?.invalid">This field is required</mat-error>
+  </mat-form-field>
+
+  <div *ngIf="engineType === 'Internal Combustion'" formGroupName="internalCombustionConfig">
+    <mat-form-field appearance="fill">
+      <mat-label>Engine Capacity (cm³)</mat-label>
+      <input matInput type="number" formControlName="engineCapacity">
+      <mat-error *ngIf="configurationForm.get('internalCombustionConfig.engineCapacity')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fuel Tank Capacity (L)</mat-label>
+      <input matInput type="number" formControlName="fuelTankCapacity">
+      <mat-error *ngIf="configurationForm.get('internalCombustionConfig.fuelTankCapacity')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cutting Height Levels</mat-label>
+      <input matInput type="number" formControlName="cuttingHeightLevels">
+      <mat-error *ngIf="configurationForm.get('internalCombustionConfig.cuttingHeightLevels')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="engineType=== 'Electric'" formGroupName="electricConfig">
+    <mat-form-field appearance="fill">
+      <mat-label>Cable Length (m)</mat-label>
+      <input matInput type="number" formControlName="cableLength">
+      <mat-error *ngIf="configurationForm.get('electricConfig.cableLength')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Blade Count</mat-label>
+      <input matInput type="number" formControlName="bladeCount">
+      <mat-error *ngIf="configurationForm.get('electricConfig.bladeCount')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color">
+      <mat-error *ngIf="configurationForm.get('electricConfig.color')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="engineType === 'Battery'" formGroupName="batteryConfig">
+    <mat-form-field appearance="fill">
+      <mat-label>Battery Count</mat-label>
+      <input matInput type="number" formControlName="batteryCount">
+      <mat-error *ngIf="configurationForm.get('batteryConfig.batteryCount')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Battery Capacity (Ah)</mat-label>
+      <input matInput type="number" formControlName="batteryCapacity">
+      <mat-error *ngIf="configurationForm.get('batteryConfig.batteryCapacity')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color">
+      <mat-error *ngIf="configurationForm.get('batteryConfig.color')?.invalid">This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!configurationForm.valid">Next</button>
+</form>

@@ -1,0 +1,49 @@
+<div *ngIf="(summaryData$ | async) as summaryData; else loading">
+  <h2>Order Summary</h2>
+
+  <h3>Lawnmower Configuration</h3>
+  <p><strong>Engine Type:</strong> {{ summaryData?.configuration?.engineType || '-' }}</p>
+  <p><strong>Brand:</strong> {{ summaryData?.configuration?.brand || '-' }}</p>
+  <p><strong>Model:</strong> {{ summaryData?.configuration?.model || '-' }}</p>
+
+  <div *ngIf="summaryData?.configuration?.internalCombustionConfig">
+    <p><strong>Engine Capacity:</strong> {{ summaryData?.configuration?.internalCombustionConfig?.engineCapacity ?? '-' }} cm³</p>
+    <p><strong>Fuel Tank Capacity:</strong> {{ summaryData?.configuration?.internalCombustionConfig?.fuelTankCapacity ?? '-' }} L</p>
+    <p><strong>Cutting Height Levels:</strong> {{ summaryData?.configuration?.internalCombustionConfig?.cuttingHeightLevels ?? '-' }}</p>
+  </div>
+
+  <div *ngIf="summaryData?.configuration?.electricConfig">
+    <p><strong>Cable Length:</strong> {{ summaryData?.configuration?.electricConfig?.cableLength ?? '-' }} m</p>
+    <p><strong>Blade Count:</strong> {{ summaryData?.configuration?.electricConfig?.bladeCount ?? '-' }}</p>
+    <p><strong>Color:</strong> {{ summaryData?.configuration?.electricConfig?.color || '-' }}</p>
+  </div>
+
+  <div *ngIf="summaryData?.configuration?.batteryConfig">
+    <p><strong>Battery Count:</strong> {{ summaryData?.configuration?.batteryConfig?.batteryCount ?? '-' }}</p>
+    <p><strong>Battery Capacity:</strong> {{ summaryData?.configuration?.batteryConfig?.batteryCapacity ?? '-' }} Ah</p>
+    <p><strong>Color:</strong> {{ summaryData?.configuration?.batteryConfig?.color || '-' }}</p>
+  </div>
+
+  <h3>Order Details</h3>
+  <p><strong>Payment Type:</strong> {{ summaryData?.order?.paymentType || '-' }}</p>
+  <p><strong>Delivery Type:</strong> {{ summaryData?.order?.deliveryType || '-' }}</p>
+  <p><strong>Delivery Date:</strong> {{ summaryData?.order?.deliveryDate ? (summaryData?.order?.deliveryDate | date) : '-' }}</p>
+
+  <h3>Delivery Address</h3>
+  <p>{{ summaryData?.order?.deliveryAddress?.firstName || '-' }} {{ summaryData?.order?.deliveryAddress?.lastName || '-' }}</p>
+  <p>{{ summaryData?.order?.deliveryAddress?.street || '-' }} {{ summaryData?.order?.deliveryAddress?.houseNumber || '-' }}/{{ summaryData?.order?.deliveryAddress?.apartmentNumber || '-' }}</p>
+  <p>{{ summaryData?.order?.deliveryAddress?.postalCode || '-' }} {{ summaryData?.order?.deliveryAddress?.city || '-' }}</p>
+
+  <h3>Users</h3>
+  <div *ngFor="let user of summaryData?.order?.users || []">
+    <p>{{ user?.firstName || '-' }} {{ user?.lastName || '-' }}</p>
+    <p>{{ user?.street || '-' }} {{ user?.houseNumber || '-' }}/{{ user?.apartmentNumber || '-' }}</p>
+    <p>{{ user?.postalCode || '-' }} {{ user?.city || '-' }}</p>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="finish()">Finish</button>
+</div>
+
+<ng-template #loading>
+  <p>Loading data...</p>
+</ng-template>
